@@ -1,0 +1,32 @@
+{
+  "name": "derieri",
+  "version": "0.0.1",
+  "description": "Derieri is an implementation of the cleverbot chatbot system",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha index.spec.js --timeout 10000",
+    "reply": "node reply.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gloxiniia/Derieri.git"
+  },
+  "keywords": [
+    "ai",
+    "deep-learning",
+    "artificial_intelligence"
+  ],
+  "author": "Gloxinia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gloxiniia/Derieri/issues"
+  },
+  "homepage": "https://github.com/gloxiniia/Derieri#readme",
+  "dependencies": {
+    "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "mocha": "8.2.1"
+  }
+}
