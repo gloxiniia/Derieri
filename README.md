@@ -5,7 +5,7 @@
 
 # How to use
 ---
-#### Npm(Unavaliable)
+#### Npm
 ```
 npm i derieri --save
 ```
