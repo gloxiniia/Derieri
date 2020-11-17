@@ -4,8 +4,7 @@
   "description": "Derieri is an implementation of the cleverbot chatbot system",
   "main": "index.js",
   "scripts": {
-    "test": "mocha index.spec.js --timeout 10000",
-    "reply": "node reply.js"
+    "test": "mocha index.spec.js --timeout 10000"
   },
   "repository": {
     "type": "git",
