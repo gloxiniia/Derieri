@@ -12,7 +12,7 @@ npm i derieri --save
 
 #### Coding
 ```js
-const deri = require('deri');
+const deri = require('derieri');
 
 deri('Hello! How are you?').then(response => {
     // Print the response
