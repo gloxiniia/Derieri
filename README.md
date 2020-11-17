@@ -5,14 +5,9 @@
 
 # How to use
 ---
-#### Npm
+#### Npm(Unavaliable)
 ```
 npm i derieri --save
-```
-
-#### Test reply
-```
-npm run reply Hello! How are you?
 ```
 
 #### Coding
