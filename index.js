@@ -1,16 +1,55 @@
-const superagent = require('superagent');
+const fetch = require('node-fetch');
 const crypto = require('crypto');
+const querystring = require('querystring');
 
-module.exports = async content => {
-	content = escape(content).includes('%u') ? escape(escape(content).replace(/%u/g, '|')) : escape(content);
-	
-	let payload = 'stimulus=' + content + '&cb_settings_scripting=no&islearning=1&icognoid=wsf&icognocheck=';
-	payload += crypto.createHash('md5').update(payload.substring(7, 33)).digest('hex');
+module.exports.Client = function Client(options = {
+	islearning: true,
+	context: false
+}) {
+	const QUERY = {
+		'islearning': options.islearning ? '1' : '0',
+		'icognoid': 'wsf'
+	};
 
-	const req = await superagent.post('https://www.cleverbot.com/webservicemin?uc=UseOfficialCleverbotAPI')
-		.set('Cookie', (await superagent.get('https://www.cleverbot.com/')).headers['set-cookie'])
-		.type('text/plain')
-		.send(payload);
+	const context = [];
 
-	return decodeURIComponent(req.header["cboutput"]);
+	this.reply = async function replyMessage(message) {
+		QUERY.stimulus = encode(message);
+
+		if (context.length > 0 && options.context) {
+			context.reverse();
+			for (var i = 0; i < context.length; i++) {
+				QUERY['vText' + (i + 2)] = encode(context[i]);
+			}
+		}
+
+		QUERY.cb_settings_scripting = 'no';
+		QUERY.icognocheck = md5(querystring.stringify(QUERY).substring(33, 59));
+
+		const res = await fetch('https://www.cleverbot.com/webservicemin?uc=UseOfficialCleverbotAPI', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'text/plain',
+				'Cookie': 'XVIS=TEI939AFFIAGAYQZ;Path=/'
+			},
+			body: querystring.stringify(QUERY)
+		});
+
+		if (res.ok) {
+			const output = unescape(res.headers.get('cboutput'));
+			context.push(message, output);
+
+			return output;
+		} else {
+			return null;
+		}
+	}
+
+	function encode(message) {
+		return escape(message).includes("%u") ? escape(escape(message).replace(/%u/g, "|")) : escape(message);
+	}
+
+	function md5(message) {
+		return crypto.createHash('md5').update(message).digest('hex');
+	}
 }

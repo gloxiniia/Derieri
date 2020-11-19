@@ -1,10 +1,11 @@
 const chai = require('chai');
-const deri = require('./');
+const { Client } = require('./');
+const deri = new Client();
 
 describe('Testing output', () => {
 
 	it('Testing function', done => {
-		deri('Hello!').then(response => {
+		deri.reply('Hello!').then(response => {
 			typeof response == 'string';
 			done();
 		});
