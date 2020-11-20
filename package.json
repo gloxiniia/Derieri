@@ -1,6 +1,6 @@
 {
   "name": "derieri",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Derieri is an implementation of the cleverbot chatbot system",
   "main": "index.js",
   "scripts": {

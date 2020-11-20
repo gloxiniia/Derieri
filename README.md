@@ -10,14 +10,18 @@
 ```js
 const Derieri = require('derieri');
 const deri = new Derieri.Client({
-    islearning: true,
-    context: false
+    islearning: true
 });
 
 deri.reply('Hello! How are you?').then(response => {
     // Print the response
     console.log(response);
 });
+
+// Or, with context
+deri.reply('I\'m good!', ['Hi.', 'How are you?']).then(response => {
+	console.log(response);
+})
 ```
 
 ##### Special thanks to [NithishPravin](https://github.com/NithishPravin) for the idea

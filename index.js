@@ -2,21 +2,16 @@ const fetch = require('node-fetch');
 const crypto = require('crypto');
 const querystring = require('querystring');
 
-module.exports.Client = function Client(options = {
-	islearning: true,
-	context: false
-}) {
+module.exports.Client = function Client(options = { islearning: true }) {
 	const QUERY = {
 		'islearning': options.islearning ? '1' : '0',
 		'icognoid': 'wsf'
 	};
 
-	const context = [];
-
-	this.reply = async function replyMessage(message) {
+	this.reply = async function replyMessage(message, context) {
 		QUERY.stimulus = encode(message);
 
-		if (context.length > 0 && options.context) {
+		if (context && context.length > 0) {
 			context.reverse();
 			for (var i = 0; i < context.length; i++) {
 				QUERY['vText' + (i + 2)] = encode(context[i]);
@@ -36,10 +31,7 @@ module.exports.Client = function Client(options = {
 		});
 
 		if (res.ok) {
-			const output = unescape(res.headers.get('cboutput'));
-			context.push(message, output);
-
-			return output;
+			return Buffer.from(unescape(res.headers.get('cboutput')), 'utf8').toString();
 		} else {
 			return null;
 		}
