@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const crypto = require('crypto');
 const querystring = require('querystring');
+const utf8 = require('utf8');
 
 module.exports.Client = function Client(options = { islearning: true }) {
 	const QUERY = {
@@ -31,7 +32,7 @@ module.exports.Client = function Client(options = { islearning: true }) {
 		});
 
 		if (res.ok) {
-			return Buffer.from(unescape(res.headers.get('cboutput')), 'utf8').toString();
+			return utf8.decode(unescape(res.headers.get('cboutput')));
 		} else {
 			return null;
 		}
